@@ -55,13 +55,34 @@ void loop() {
 /**
  * Interrupts
  */
+int previousState = 0; // 0 means no button have been pushed
+int currentState = 0; 
 void updateButton(){
-  if(digitalRead(SW_START) == LOW) itrStart();
-  if(digitalRead(SW_1) == LOW) itr1();
-  if(digitalRead(SW_2) == LOW) itr2();
-  if(digitalRead(SW_3) == LOW) itr3();
-  if(digitalRead(SW_4) == LOW) itr4();
+  currentState = getState();
+  if(previousState != currentState){
+      previousState = currentState;
+      delay(10);
+      if(digitalRead(SW_START) == LOW){
+        itrStart();
+        delay(50);
+      }
+      if(digitalRead(SW_1) == LOW) {
+        itr1();
+      }
+      if(digitalRead(SW_2) == LOW) {
+        itr2();
+      }
+      if(digitalRead(SW_3) == LOW) {
+        itr3();
+      }
+      if(digitalRead(SW_4) == LOW) {
+        itr4();
+      }
+   }
   //delay(1000);
+}
+int getState(){
+  return digitalRead(SW_START)*1 + digitalRead(SW_1)*2 + digitalRead(SW_2)*4 + digitalRead(SW_3)*8 + digitalRead(SW_4)*16; 
 }
 void itrStart(){
   Serial.println("SEND START");
