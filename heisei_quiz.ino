@@ -14,10 +14,11 @@ PubSubClient mqttClient(wifiClient);
 const char* topic = "test";     // 送信先のトピック名
 char* payload;                   // 送信するデータ
 
-const int SW_RED = 34;
-const int SW_BLUE = 35;
-const int SW_YELLOW = 32;
-const int SW_GREEN = 33;
+const int SW_START = 34;
+const int SW_1 = 35;
+const int SW_2 = 32;
+const int SW_3 = 33;
+const int SW_4 = 25;
 
 void setup() {
     Serial.begin(38400);
@@ -28,10 +29,11 @@ void setup() {
     // Connect MQTT
     connectMqtt();
 
-    pinMode(SW_RED, INPUT);
-    pinMode(SW_BLUE, INPUT);
-    pinMode(SW_YELLOW, INPUT);
-    pinMode(SW_GREEN, INPUT);
+    pinMode(SW_START, INPUT);
+    pinMode(SW_1, INPUT);
+    pinMode(SW_2, INPUT);
+    pinMode(SW_3, INPUT);
+    pinMode(SW_4, INPUT);
 }
 
 void loop() {
@@ -54,41 +56,41 @@ void loop() {
  * Interrupts
  */
 void updateButton(){
-  if(Serial.available() > 0) {
-    previousByte = incomingByte;
-    incomingByte = Serial.read();
-    Serial.println(incomingByte);
-    if(incomingByte != previousByte){
-      if(incomingByte == 0x00 || incomingByte == '0') itrRed();
-      else if(incomingByte == 0x01 || incomingByte == '1') itrBlue();
-      else if(incomingByte == 0x02 || incomingByte == '2') itrYellow();
-      else if(incomingByte == 0x03 || incomingByte == '3') itrGreen();
-      //delay(1000);
-    }
-  }
+  if(SW_START == LOW) itrStart();
+  if(SW_1 == LOW) itr1();
+  if(SW_2 == LOW) itr2();
+  if(SW_3 == LOW) itr3();
+  if(SW_4 == LOW) itr4();
+  //delay(1000);
 }
-void itrRed(){
-  Serial.println("SEND 0");
+void itrStart(){
+  Serial.println("SEND START");
   if(mqttClient.connected()){
-    mqttClient.publish(topic, "0");
+    mqttClient.publish(topic, "5_dc");
   }
 }
-void itrBlue(){
+void itr1(){
   Serial.println("SEND 1");
   if(mqttClient.connected()){
-    mqttClient.publish(topic, "1");
+    mqttClient.publish(topic, "1_dc");
   }
 }
-void itrGreen(){
+void itr2(){
   Serial.println("SEND 2");
   if(mqttClient.connected()){
-    mqttClient.publish(topic, "2");
+    mqttClient.publish(topic, "2_dc");
   }
 }
-void itrYellow(){
+void itr3(){
   Serial.println("SEND 3");
   if(mqttClient.connected()){
-    mqttClient.publish(topic, "3");
+    mqttClient.publish(topic, "3_dc");
+  }
+}
+void itr4(){
+  Serial.println("SEND 4");
+  if(mqttClient.connected()){
+    mqttClient.publish(topic, "4_dc");
   }
 }
 /**
