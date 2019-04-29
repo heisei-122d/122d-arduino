@@ -56,11 +56,11 @@ void loop() {
  * Interrupts
  */
 void updateButton(){
-  if(SW_START == LOW) itrStart();
-  if(SW_1 == LOW) itr1();
-  if(SW_2 == LOW) itr2();
-  if(SW_3 == LOW) itr3();
-  if(SW_4 == LOW) itr4();
+  if(digitalRead(SW_START) == LOW) itrStart();
+  if(digitalRead(SW_1) == LOW) itr1();
+  if(digitalRead(SW_2) == LOW) itr2();
+  if(digitalRead(SW_3) == LOW) itr3();
+  if(digitalRead(SW_4) == LOW) itr4();
   //delay(1000);
 }
 void itrStart(){
@@ -113,13 +113,11 @@ void connectWiFi()
 void connectMqtt()
 {
     mqttClient.setServer(mqttHost, mqttPort);
-    mqttClient.setCallback(callback);
     while( ! mqttClient.connected() ) {
         Serial.println("Connecting to MQTT...");
         String clientId = "ESP32-" + String(random(0xffff), HEX);
         if ( mqttClient.connect(clientId.c_str()) ) {
             Serial.println("connected"); 
-            mqttClient.subscribe(subtopic);
         }
         delay(1000);
         randomSeed(micros());
