@@ -24,10 +24,10 @@ void setup() {
     Serial.begin(38400);
 
     // Connect WiFi
-    connectWiFi();
+    //DEBUGLOCAL:connectWiFi();
 
     // Connect MQTT
-    connectMqtt();
+    //DEBUGLOCAL:connectMqtt();
 
     pinMode(SW_START, INPUT);
     pinMode(SW_1, INPUT);
@@ -42,13 +42,13 @@ void loop() {
     //mqttClient.publish(topic, payload);
     updateButton();
     // WiFi
-    if ( WiFi.status() == WL_DISCONNECTED ) {
-        connectWiFi(); 
-    }
+    //DEBUGLOCAL:if ( WiFi.status() == WL_DISCONNECTED ) {
+    //DEBUGLOCAL:    connectWiFi(); 
+    //DEBUGLOCAL:}
     // MQTT
-    if ( ! mqttClient.connected() ) {
-        connectMqtt();
-    }
+    //DEBUGLOCAL:if ( ! mqttClient.connected() ) {
+    //DEBUGLOCAL:    connectMqtt();
+    //DEBUGLOCAL:}
     mqttClient.loop();  
 
 }
