@@ -73,7 +73,7 @@ void updateButton(){
         itr2();
       }
       if(digitalRead(SW_3) == LOW) {
-        itr3();
+        //itr3();
       }
       if(digitalRead(SW_4) == LOW) {
         itr4();
@@ -82,7 +82,7 @@ void updateButton(){
   //delay(1000);
 }
 int getState(){
-  return digitalRead(SW_START)*1 + digitalRead(SW_1)*2 + digitalRead(SW_2)*4 + digitalRead(SW_3)*8 + digitalRead(SW_4)*16; 
+  return digitalRead(SW_START)*1 + digitalRead(SW_1)*2 + digitalRead(SW_2)*4 + digitalRead(SW_4)*16; 
 }
 void itrStart(){
   Serial.println("SEND START");
